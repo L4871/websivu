@@ -1,0 +1,328 @@
+
+.nav{
+
+	float: right;
+}
+.header{
+
+	overflow: hidden;
+	width: 100%;
+
+}
+
+.header{
+
+	background: white;
+	padding-bottom: 20px;
+	margin-bottom: 20px;
+
+}
+.site-header li{
+
+	display: inline;
+	padding: 20px;
+}
+body{
+	
+
+
+
+}
+.banner{
+	background-image: url("media/test.jpg");
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-position: center; 
+}
+
+.profile-info{
+	padding-top: 2em;
+}
+
+.profile-recipe-container{
+	width: 100%;
+	display: flex;
+
+}
+.profile-recipes{
+	width: 80%;
+	padding-left: 12em;
+}
+.profile-favorites{
+	width: 100%
+	margin:1px;
+}
+
+.profile-card{
+	margin-left: 15px;
+	margin-bottom: 30px;
+	min-width: 225px;
+	max-width: 250px;
+	float: left;
+	background: white;
+	border: 1px solid rgba(0,0,0,.125);
+	border-radius: .25rem;
+}
+
+.content-container{
+	width: 100%
+}
+.search{
+	float: left;
+	width: 250px;
+	height: 600px;
+	background-color: red;
+	margin-right: 10px;
+	padding-left:10px;
+}
+
+.info-card{
+	float: right;
+	width: 350px;
+	height: 558px;
+	border-left: 1px solid #aaa;
+	margin-right: 10px;
+	padding-left:10px;
+}
+
+.row{
+	display: flex;
+	width: 80%;
+	float:right;
+
+	
+}
+
+.card{
+	margin-left: 15px;
+	margin-bottom: 15px;
+	min-width: 250px;
+	max-width: 250px;
+
+
+}
+.card-body{
+	max-width: 200px;
+	max-height: 80px;
+	min-height: 80px;
+}
+.card-body p{
+	margin-bottom: 0;
+}
+.card-img-top{
+	margin-right: 0px;
+}
+.card-footer{
+
+}
+
+.card-footer ul{
+	padding: 0px;
+}
+.card-footer li{
+	list-style: none;
+	float: left;
+	padding-right: 1em;
+}
+
+
+.container{
+	padding-top:2em;
+	padding-left: 5em;
+	padding-right: 5em;
+	max-width: 1600px;
+	background: #f2f2f2;
+
+}
+.container h4{
+	margin-bottom: 0;
+	padding-bottom: 8px;
+}
+
+.container a{
+	text-decoration: inherit;
+	color:inherit;
+}
+
+
+.detailed-recipe-container{
+	background: #f5f5f5;
+	padding: 1.5em;
+
+}
+
+.detailed-recipe-container img{
+	padding-bottom: 2em;
+}
+
+.detailed-recipe-container ul{
+	padding-bottom: 30px;
+
+}
+.detailed-recipe-container li{
+	display: inline;
+	padding-right: 1em;
+}
+
+.recipe-detail-ingredients ul{
+	margin: 0px;
+	padding-bottom: 1em;
+}
+
+.detailed-mealplan-container ul{
+	font-size: 0px;
+	margin: 0px;
+	padding-bottom: 5px;
+}
+.detailed-mealplan-container li{
+	font-size: 16px;
+}
+.shopping-list{
+	list-style: none;
+}
+th.recipe-macro-table-header{
+	padding:10px;
+	font-weight: normal;
+}
+td.recipe-macro-table-data{
+	padding-left:10px;
+}
+ul.profile-info{
+	list-style: none;
+}
+.center{
+
+	width: 40%;
+	margin-left:auto;
+	margin-right: auto;
+}
+.center img{
+	max-width: 100%;
+	height: auto;
+}
+/*Mealplan detail view*/
+.mealplan-recipe-container{
+	padding-left: 5em;
+	padding-right: 10em;
+	max-width: 2000px;
+}
+
+.mealplan-recipe-container li{
+	padding-bottom: 5px;
+	display: inline;
+	padding-right: 3em;
+
+}
+.mealplan-recipe:nth-child(odd){
+	background: #a9a9a9; 
+}
+
+.detailed-mealplan-container{
+	background: #f5f5f5;
+}
+
+.detailed-mealplan-container h5{
+	padding-top: 2em;
+	padding-bottom: 0.4em;
+}
+
+.totals-container{
+	padding-left: 5em;
+}
+
+
+.totals-container li{
+	display: inline;
+	padding-right: 3em;
+}
+.container-fluid{
+	width:80%;
+
+}
+
+.carousel-control-prev{
+
+	margin-left: -100px;
+	margin-top: 169px;
+}
+.carousel-control-next{
+	margin-right: -120px;
+	margin-top: 169px;
+}
+li.time{
+	float:right;
+}
+
+/*Favorite button*/
+
+
+/*Delete Mealplan */
+
+
+@media (min-width: 768px) {
+
+    /* show 4 items */
+    .carousel-inner .active,
+    .carousel-inner .active + .carousel-item,
+    .carousel-inner .active + .carousel-item + .carousel-item,
+    .carousel-inner .active + .carousel-item + .carousel-item + .carousel-item  {
+        display: block;
+    }
+    
+    .carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left),
+    .carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left) + .carousel-item,
+    .carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left) + .carousel-item + .carousel-item,
+    .carousel-inner .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left) + .carousel-item + .carousel-item + .carousel-item {
+        transition: none;
+    }
+    
+    .carousel-inner .carousel-item-next,
+    .carousel-inner .carousel-item-prev {
+      position: relative;
+      transform: translate3d(0, 0, 0);
+    }
+    
+    .carousel-inner .active.carousel-item + .carousel-item + .carousel-item + .carousel-item + .carousel-item {
+        position: absolute;
+        top: 0;
+        right: -25%;
+        z-index: -1;
+        display: block;
+        visibility: visible;
+    }
+    
+    /* left or forward direction */
+    .active.carousel-item-left + .carousel-item-next.carousel-item-left,
+    .carousel-item-next.carousel-item-left + .carousel-item,
+    .carousel-item-next.carousel-item-left + .carousel-item + .carousel-item,
+    .carousel-item-next.carousel-item-left + .carousel-item + .carousel-item + .carousel-item,
+    .carousel-item-next.carousel-item-left + .carousel-item + .carousel-item + .carousel-item + .carousel-item {
+        position: relative;
+        transform: translate3d(-100%, 0, 0);
+        visibility: visible;
+    }
+    
+    /* farthest right hidden item must be abso position for animations */
+    .carousel-inner .carousel-item-prev.carousel-item-right {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        display: block;
+        visibility: visible;
+    }
+    
+    /* right or prev direction */
+    .active.carousel-item-right + .carousel-item-prev.carousel-item-right,
+    .carousel-item-prev.carousel-item-right + .carousel-item,
+    .carousel-item-prev.carousel-item-right + .carousel-item + .carousel-item,
+    .carousel-item-prev.carousel-item-right + .carousel-item + .carousel-item + .carousel-item,
+    .carousel-item-prev.carousel-item-right + .carousel-item + .carousel-item + .carousel-item + .carousel-item {
+        position: relative;
+        transform: translate3d(100%, 0, 0);
+        visibility: visible;
+        display: block;
+        visibility: visible;
+    }
+
+}

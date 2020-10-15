@@ -1,0 +1,80 @@
+
+<!--mealplan, recipeIngredient -->
+{% extends "recipe/base.html" %}
+{% load static %}
+{% block content%}
+<div class="detailed-mealplan-container">
+	<h2>{{mealplan.mealplan_name}}</h2>
+	<h5>Mealplan recipes</h5>
+
+<div class ="mealplan-recipe-container">
+	<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>Recipe</th>
+      <th>Calories</th>
+      <th>fats/carbs/protein</th>
+    </tr>
+  </thead>
+	{% for recipe in mealplan.getMealplanRecipes %}
+
+  <tbody>
+    <tr>
+      <td scope="row"><li><a href="{% url 'recipe-detail' recipe.slug %}">{{recipe.recipe}}</a><li></td>
+      <td>{{recipe.getRecipeKcal}} kcal</td>
+      <td>{{recipe.getRecipeMacros}}</td>
+    </tr>
+  </tbody>
+		{% endfor %}
+		</table>
+		</div>
+	<h5>totals</h5>
+	<div class="totals-container">
+		<li>{{mealplan.calculateMealplanTotalKcal}} kcal</li>
+		<li>{{mealplan.calculateMealplanTotalMacros}}</li>
+		<li>price: {{mealplan.calculateMealplanPrice}}€ for day</li>
+	</div>
+
+	<div class="shopping-list">
+		<h5>Shopping list</h5>
+		{% for recipe in mealplan.getMealplanShoppinglist %}
+			<li>{{recipe}}</li>
+		{% endfor %}
+	</div>
+	<!--<p>testfnc: {{mealplan.testfnc}}<p>-->
+
+</div>
+{% if user == mealplan.createdBy%}
+<!--MODAL TESTS -->
+<div class="text-center">
+	<!-- Button HTML (to Trigger Modal) -->
+	<a href="#deleteModal" class="trigger-btn" data-toggle="modal">Delete</a>
+	<a href="{% url 'edit-mealplan' pk=mealplan.id %}" class="trigger-btn">Edit</a>
+</div>
+<!-- Modal HTML -->
+<div id="deleteModal" class="modal fade">
+	<div class="modal-dialog modal-confirm">
+		<div class="modal-content">
+			<div class="modal-header">			
+				<h4 class="modal-title">Are you sure?</h4>	
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			</div>
+			<div class="modal-body">
+				<p>Do you really want to delete this mealplan? This process cannot be undone.</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-info" data-dismiss="modal">Cancel</button>
+				
+				<form action="{% url 'deleteMealplan' pk=mealplan.id %}" method="post">
+					{% csrf_token %}
+					<button type="submit" class="btn btn-danger">Delete</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>   
+{%endif%}
+
+
+
+{% endblock content %}

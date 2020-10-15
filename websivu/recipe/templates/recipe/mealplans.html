@@ -1,0 +1,15 @@
+{% extends "recipe/base.html" %}
+{% load static %}
+{% block content%}
+{% for mealplan in mealplans %}
+<a href="{% url 'recipe-mealplan-detail' mealplan.id %}">
+	<div class="mealplan-container">
+		<img src="{% static 'recipe/media/default.png' %}" alt="Smiley face" height="200" width="200"> 
+		<h3>{{mealplan.mealplan_name}}</h3>
+		<!--<p>By {{recipe.author}} on {{recipe.date_posted}}</p>-->
+
+	</div>
+</a>
+{% endfor %}
+{% endblock content %}
+

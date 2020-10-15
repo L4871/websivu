@@ -1,0 +1,124 @@
+<!--mealplan, recipeIngredient -->
+{% extends "recipe/base.html" %}
+{% load static %}
+{% block content%}
+	<script src="{% static 'js/jquery-3.5.1.js' %}"></script>
+{%if request.user.is_anonymous%}
+<div class=anonymousUser>
+	<p>Voit luoda ruokasuunnitelman kulutus kaloreiden perusteella jos kirjaudut sisään. Nämä ruokasuunnitelmat ovat tehty 2600kcal kulutus kaloreiden mukaan. Seuraavassa versiossa voit myös luoda ruokasuunnitelmia makroravitoarvojen perusteella, ja arpoa uudelleen yksittäisiä ruokia jos joku ei maistu.</p>
+</div>
+{%endif%}
+<div class ="mealplan-recipe-container">
+	<form id="mealplanform">
+		{% csrf_token %}
+	<table id="recipe-table" class="table table-hover">
+  <thead>
+    <tr>
+      <th>Resepti</th>
+      <th>Kaloreita</th>
+      <th>rasvaa/hiilareita/proteiinia</th>
+    </tr>
+  </thead>
+  {{ formset.management_form }}
+	{%for recipe in recipes%}
+
+  <tbody>
+    <tr>
+      <td class="recipe-name" scope="row"><li><a href="{% url 'recipe-detail' recipe.slug %}">{{recipe.recipe}}</a><li></td>
+      <td class="recipe-kcal">{{recipe.getRecipeKcal}} kcal</td>
+      <td class="recipe-macros">{{recipe.getRecipeMacros}}</td>
+      <!--<td class="recipe-refresh"><button class="btn btn-success btn-lg">Arvo uusi</button></td>-->
+    </tr>
+  </tbody>
+		{% endfor %}
+		<tbody>
+			<th>Yhteensä:</th>
+			<td id="total-calories">calories</td>
+			<td id="total-macros">macros</td>
+		</tbody>
+		</table>
+	</form>
+</div>
+<a href="{% url 'generate-mealplan' %}"><td class="recipe-refresh"><button class="btn btn-success btn-lg">Arvo uusi</button></td></a>
+<script type='text/javascript'>
+
+	document.addEventListener("DOMContentLoaded", function() {
+  onLoad();
+});
+$(document).ready(function(){
+	$(".btn").click(function(){
+		$.ajax({
+			url: 'refresh',
+			type: 'get',
+			data: {
+				button_text : $(this).text()
+			},
+			success: function(response){
+				$(".btn").text('test')
+			}
+		});
+	});
+	$("#")
+});
+	function onLoad(){
+		setTotalKcal();
+		setTotalMacros();
+	}
+	function getTotalKcal(){
+		var totalCalories = 0;
+		var calories = document.getElementsByClassName("recipe-kcal");
+		for (i = 0; i < calories.length; i++){
+			recipeKcal = parseInt(calories[i].innerHTML,10);
+			totalCalories = totalCalories + recipeKcal;
+		}
+		return totalCalories
+	}
+
+	function setTotalKcal(){
+		var totalKcal = getTotalKcal();
+		totalKcalCell = document.getElementById("total-calories");
+		totalKcalCell.innerHTML = totalKcal;
+		console.log(totalKcal)
+
+	}
+
+	function getTotalMacros(){
+		var fats = 0;
+		var carbs = 0;
+		var protein = 0;
+		var totalMacros = [0,0,0];
+		var recipeMacros = document.getElementsByClassName("recipe-macros");
+		for(i=0; i<recipeMacros.length; i++){
+			//console.log(recipeMacros[i].innerHTML)
+			macros = recipeMacros[i].innerHTML.split(",");
+			//console.log(macros)
+			//console.log(macros.length)
+			for(j=0; j<macros.length; j++){
+				//macros[j] = macros[j].replace("]","");
+				macros[j] = macros[j].replace("[","");
+				macro = parseInt(macros[j])
+				//console.log(parseInt(macros[j]))
+				//console.log(parseInt(macros[j]),10)
+				totalMacros[j] = totalMacros[j] + macro
+				
+			}
+
+		}
+		console.log(totalMacros)
+		return totalMacros;
+		//console.log(totalMacros)
+	}
+
+	function setTotalMacros(){
+		var totalMacros = getTotalMacros();
+		console.log(totalMacros)
+		var totalMacroCell = document.getElementById("total-macros");
+		totalMacroCell.innerHTML = totalMacros;
+
+	}
+	function generateNewMeal(){
+
+		console.log("asd")
+	}
+</script>
+{% endblock content %}

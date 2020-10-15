@@ -1,0 +1,137 @@
+{% extends "recipe/base.html" %}
+{% load crispy_forms_tags %}
+{% block content%}
+	<div class="content-section">
+		<form id="recipeform" method="POST" onsubmit="getEmptyForms()">
+			{% csrf_token %}
+
+			<fieldset class="form-group">
+				<legend class="border-bottom mb-4">Edit Recipe</legend>
+				{{ recipe_form.as_p }}
+
+				<div id='ingredient-container'onload="updateFields()">
+					{{ formset.management_form }}
+					{% for form in formset %}
+						<div id='ingredient0'>
+							{{form.id}}
+							{{form.ingredient}}
+       						{{form.amount}}
+       						{{form.recipe}}
+       						<button id="id_form-0-button" type="button" onclick="addField();">+</button>
+       					</div>
+       				{% endfor %}
+						
+				</div>
+			</fieldset>
+			<div class="form-group">
+				<button class="btn btn-outline-info" type="submit">Post</button>
+			</div>
+
+		</form>
+
+
+			
+
+
+
+
+	</div>
+
+<script type='text/javascript'>
+document.addEventListener("DOMContentLoaded", function() {
+  updateFields();
+});
+recipeform.addEventListener('submit', getEmptyForms)
+	function addField(){
+		var orginal = document.getElementById('ingredient0');
+		var clone = orginal.cloneNode(true);
+		//Change if you add more elements to ingredient div
+		clone.childNodes[7].innerHTML = '+';
+		clone.childNodes[7].setAttribute('onclick','addField()');
+		//clone.childNodes[3].innerHTML = '0';
+		//console.log(clone.childNodes[3].attributes)
+		clone.childNodes[5].value = "";
+		clone.childNodes[3].value = "";
+		orginal.parentNode.appendChild(clone);
+		//console.log(clone.childNodes[3].value)
+		updateFields();
+
+	}
+	function removeFields(id){
+		document.getElementById('ingredient'+id).remove();
+		updateFields();
+
+	}
+	function updateFields(){
+		var ingredientDiv = document.getElementById('ingredient-container').querySelectorAll("div");
+		//console.log(ingredientDiv)
+		//Update div id
+		for (var i = 0; i < ingredientDiv.length; i++){
+			ingredientDiv[i].attributes.id.value = 'ingredient' + i;
+			var childs = ingredientDiv[i].childNodes;
+			//Update element id and name
+			for(var x = 0; x < childs.length; x++){
+				if(childs[x].nodeName != "#text"){
+					if(childs[x].attributes.name != null){
+						var oldName = childs[x].attributes.name.value.split("-");
+						var newName = oldName[0] + '-' + i + '-' + oldName[2];
+						childs[x].setAttribute("name",newName)
+					
+					}
+					if(childs[x].attributes.id != null){
+						var oldID = childs[x].attributes.id.value.split("-");
+						newID = oldID[0] + '-' + i + '-' + oldID[2]; 
+						childs[x].setAttribute("id",newID)
+
+					}
+
+				}
+
+			//console.log(i)
+
+			}
+			//Last element = addfield, else remove
+			if(i !=ingredientDiv.length -1){
+				var buttonID = 'id_form-' + i + '-button';
+				var callID = 'removeFields('+ i +');'
+				//console.log(buttonID)
+				var ingredientElementButton = document.getElementById(buttonID);
+				ingredientElementButton.innerHTML = '-';
+				ingredientElementButton.setAttribute('onclick',callID);
+			}
+	
+		}
+		//change total forms value
+		document.getElementById('id_form-TOTAL_FORMS').value = i;
+	}
+
+	function getEmptyForms(){
+		var empytyDivIds=[];
+		var recipeDiv = document.getElementById('ingredient-container').querySelectorAll("div");
+		console.log(recipeDiv);
+		//get ids from empty select boxes
+		
+		for(var i = 0; i < recipeDiv.length; i++){
+
+			selectBoxId = 'id_form-' + i + '-ingredient';
+			selectBox = document.getElementById(selectBoxId);
+			if(selectBox.value == ''){
+				empytyDivIds.push(i);
+			}
+		}
+		console.log(empytyDivIds)
+		for(var x = 0; x <empytyDivIds.length;x++){
+			document.getElementById('ingredient'+empytyDivIds[x]).remove()
+		}
+		updateFields();
+	}
+
+</script>
+
+{% endblock content %}
+
+<!--			for(var x = 0; x < childs.length; x++){
+				if(childs[x].nodeName != null){
+					console.log(childs)
+				}
+				-->

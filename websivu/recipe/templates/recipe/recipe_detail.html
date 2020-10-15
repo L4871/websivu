@@ -1,0 +1,104 @@
+{% extends "recipe/base.html" %}
+{% load static %}
+{% block content%}
+<div class="detailed-recipe-container">
+	<div class=info-card>
+		<h5>Raaka-aineet</h5>
+		<div class="recipe-detail-ingredients">
+			{% for ing in recipeIngredient.getRecipeIngredientObjects %}
+				<ul>
+					<li>{{ing.amount}}g</li>
+					<li>{{ing.ingredient}}<li>
+					
+				</ul>
+			{% endfor %}
+		</div>
+
+
+		<div class="recipe-detail-macros">
+			<p>Hinta: {{recipeIngredient.calculateRecipePrice}}€</p>
+			<br>
+
+		<table>
+			<tr>
+				<th class=recipe-macro-table-header>Kaloreita</th>
+				<th class=recipe-macro-table-header>Rasvaa</th>
+				<th class=recipe-macro-table-header>Hiilihydraatteja</th>
+				<th class=recipe-macro-table-header>Proteiinia</th>
+			</tr>
+			
+			<tr>
+				<td class="recipe-macro-table-data">{{recipeIngredient.calculateRecipeCalories}}</td>
+				{% for macro in recipeIngredient.countRecipeMacros %}
+				<td class="recipe-macro-table-data">{{macro}}</td>
+				{% endfor %}
+			</tr>
+		</table>
+		</div>
+
+	</div>
+
+	<div class="center">
+		{%if recipe.image%}
+			<img src="{{MEDIA_URL}}{{recipe.image.url}}">
+		{%else%}
+			<img src="{% static 'recipe/media/default.jpg' %}" alt="Smiley face"> 
+		{%endif%}
+	</div>
+
+	<!-- recipe name-->
+	<h3>{{recipe.recipe}}</h3>
+	<h5>{{recipe.meal}}</h5>
+
+	<p>{{recipe.description|linebreaks}}</p>
+
+	<!-- <p>test function: {{recipeIngredient.testfn}}</p> -->
+
+{% if user.is_authenticated %}
+	{%if liked%}
+		<a href="{% url 'recipeFavorite' slug=recipe.slug%}">
+			<i class="fas fa-2x fa-star"></i>		
+		</a>
+	{%else%}
+		<a href="{% url 'recipeFavorite' slug=recipe.slug%}">
+			<i class="far fa-2x fa-star"></i>
+		</a>
+	{%endif%}
+{%else%}
+	<a href="{% url 'recipeFavorite' slug=recipe.slug%}">
+		<i class="far fa-2x fa-star"></i>
+	</a>
+{%endif%}
+{% if user == recipe.author%}
+<div class="text-center">
+	<!-- Button HTML (to Trigger Modal) -->
+	<a href="#deleteModal" class="trigger-btn" data-toggle="modal">Delete</a>
+	<a href="{% url 'recipe-update' slug=recipe.slug %}" class="trigger-btn">Edit</a>
+</div>
+<!-- Modal HTML -->
+<div id="deleteModal" class="modal fade">
+	<div class="modal-dialog modal-confirm">
+		<div class="modal-content">
+			<div class="modal-header">			
+				<h4 class="modal-title">Are you sure?</h4>	
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			</div>
+			<div class="modal-body">
+				<p>Do you really want to delete this recipe? This process cannot be undone.</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-info" data-dismiss="modal">Cancel</button>
+				
+				<form action="{% url 'recipe-delete' slug=recipe.slug %}" method="post">
+					{% csrf_token %}
+					<button type="submit" class="btn btn-danger">Delete</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>   
+
+{%endif%}
+
+</div>
+{% endblock content %}
