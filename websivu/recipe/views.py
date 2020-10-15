@@ -271,17 +271,3 @@ class AjaxHandlerView(View):
 		return render(request,'recipe/mealplan_generate.html')
 
 
-class recipeCards(ListView):
-
-
-	model = Recipe
-	template_name = 'recipe/test.html'
-	context_object_name = "recipes"
-
-	def get_context_data(self, **kwargs):
-		context = super().get_context_data(**kwargs)
-		context['breakfasts'] = RecipeFilter(self.request.GET, queryset=Recipe.objects.filter(meal="Breakfast"))
-		context['snacks'] = RecipeFilter(self.request.GET, queryset=Recipe.objects.filter(meal="Snack"))
-		context['lunches'] = RecipeFilter(self.request.GET, queryset=Recipe.objects.filter(meal="Lunch"))
-		context['dinners'] = RecipeFilter(self.request.GET, queryset=Recipe.objects.filter(meal="Dinner"))
-		return context
