@@ -1,0 +1,17 @@
+{% extends "recipe/base.html" %}
+{% load crispy_forms_tags %}
+{% block content%}
+	<div class="content-section">
+		<form method="POST">
+			{% csrf_token %}
+			<div id='profile-info'>
+				<h4>Modify weight</h4>
+				{{profile_form}}
+			</div>
+			<button class="btn btn-outline-info" type="submit">Post</button>
+		</form>
+
+	</div>
+
+
+{% endblock content %}

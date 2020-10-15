@@ -1,0 +1,98 @@
+{% extends "recipe/base.html" %}
+{% load static %}
+{% block content%}
+<div class = profile-container>
+	<div class=profile-info>
+		<h4>Tervetuloa takaisin {{user.user}}!</h4>
+		<h5>paino: {{profile.weight}} kg <a href="{% url 'edit-profile'%}"><small>muokkaa</small></a></h5>
+	</div>
+	<div class="profile-recomendations">
+		<h5>Suositukset</h5>
+		<table>
+			<tr>
+				<th class=recipe-macro-table-header>Kaloreita</th>
+				<th class=recipe-macro-table-header>Rasvaa</th>
+				<th class=recipe-macro-table-header>Hiilihydraatteja</th>
+				<th class=recipe-macro-table-header>Proteiinia</th>
+			</tr>
+			
+			<tr>
+				<td class="recipe-macro-table-data">{{profile.getCalories}}</td>
+				{% for macro, val in profile.getMacros.items %}
+				<td class="recipe-macro-table-data">{{val}}</td>
+				{% endfor %}
+			</tr>
+		</table>
+		<!--Macrot voi esittää taulukossa -->
+		
+	</div>
+	<h4>Tallennetut ruokasuunnitelmat</h4>
+</div>
+
+<div class=profile-recipe-container>
+	<div class=profile-recipes>
+		{% for mealplan in profile.getSavedMealplans%}
+			<div class="profile-card">
+				<a href="{% url 'recipe-mealplan-detail' mealplan.id %}">
+				<img class = "card-img-top" src="{% static 'recipe/media/default.png' %}" alt="Smiley face" height="200" width="200"> 
+				<div class="card-body">{{mealplan.mealplan_name}}</div>
+				</a>
+			</div>
+		{% endfor %}
+	</div>
+</div>
+
+	<h4>Omat reseptit</h4>
+<div class=profile-recipe-container>
+	<div class=profile-recipes>
+		{% for recipe in profile.getProfileRecipes%}
+			<div class="profile-card">
+				<a href="{% url 'recipe-detail' recipe.slug %}">
+				{%if recipe.image%}
+					<img class = "card-img-top" src="{{MEDIA_URL}}{{recipe.image.url}}" height="200" width="200">
+				{%else%}
+					<img class = "card-img-top" src="{% static 'recipe/media/default.png' %}" alt="Smiley face" height="200" width="200">
+				{%endif%} 
+				<div class="card-body">{{recipe.recipe}}</div>
+				<div class =card-footer>
+					<ul>
+							<li><small class="text-muted">{{recipe.meal}}</small></li>
+							<li class="time"><i class="fa fa-clock-o" aria-hidden="true"><small class="text-muted"> NaN min</small></i></li>
+						</ul>
+				</div>
+				</a>
+			</div>
+		{% endfor %}
+	</div>
+</div>
+<h4>Suosikit</h4>
+<div class=profile-recipe-container>
+	<div class=profile-recipes>
+		{% for recipe in profile.getFavoriteRecipes%}
+			<div class="profile-card">
+				<a href="{% url 'recipe-detail' recipe.slug %}">
+				{%if recipe.image%}
+					<img class ="card-img-top" src="{{MEDIA_URL}}{{recipe.image}}">
+				{%else%}
+					<img class = "card-img-top" src="{% static 'recipe/media/default.png' %}" alt="Smiley face" height="200" width="200">
+				{%endif%} 
+				<div class="card-body">{{recipe.recipe}}</div>
+				<div class =card-footer>
+					<ul>
+						<li><small class="text-muted">{{recipe.meal}}</small></li>
+						<li class="time"><i class="fa fa-clock-o" aria-hidden="true"><small class="text-muted"> NaN min</small></i></li>
+					</ul>
+				</div>
+				</a>
+			</div>
+		{% endfor %}
+	</div>
+</div>
+
+{% endblock content %}
+
+
+
+
+
+
